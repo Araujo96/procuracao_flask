@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, render_template, request, send_file
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
-from datetime import datetime
+from datetime import datetime, timedelta
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -47,7 +47,7 @@ def index():
         nome_procurador = form.nome_procurador.data
         cpf_procurador = form.cpf_procurador.data
         data_atual = datetime.now().strftime('%d/%m/%Y')
-        validade = (datetime.now().year + 1)
+        validade = (datetime.now() + timedelta(days=365)).strftime('%d/%m/%Y')  # Adicionando 1 ano à data atual
 
         # Gerar o PDF
         buffer = BytesIO()
